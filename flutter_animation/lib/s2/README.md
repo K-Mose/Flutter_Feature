@@ -1,0 +1,12 @@
+# Implicit Animation
+1. [Animated Align](https://api.flutter.dev/flutter/widgets/AnimatedAlign-class.html) 
+2. [Animated Container](https://api.flutter.dev/flutter/widgets/AnimatedContainer-class.html)
+3. [Animated Default TextStyle](https://api.flutter.dev/flutter/widgets/AnimatedDefaultTextStyle-class.html)
+4. [Animated Opacity](https://api.flutter.dev/flutter/widgets/AnimatedOpacity-class.html)
+5. [Animated Padding](https://api.flutter.dev/flutter/widgets/AnimatedPadding-class.html)
+6. [Animated Physical Model](https://api.flutter.dev/flutter/widgets/AnimatedPhysicalModel-class.html)
+7. [Animated Positioned](https://api.flutter.dev/flutter/widgets/AnimatedPositioned-class.html)
+8. [Animated Positioned Directional](https://api.flutter.dev/flutter/widgets/AnimatedPositionedDirectional-class.html)
+9. [Animated CrossFade](https://api.flutter.dev/flutter/widgets/AnimatedCrossFade-class.html)
+10. [Animated Switcher](https://api.flutter.dev/flutter/widgets/AnimatedSwitcher-class.html)
+11. [Animated List](https://api.flutter.dev/flutter/widgets/AnimatedList-class.html)
