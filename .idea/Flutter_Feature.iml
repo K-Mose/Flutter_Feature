@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/bootpay_test/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bootpay_test/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bootpay_test/build" />
+      <excludeFolder url="file://$MODULE_DIR$/desktop_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/desktop_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/desktop_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/dll_test/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/dll_test/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/dll_test/build" />
+      <excludeFolder url="file://$MODULE_DIR$/file_test/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/file_test/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/file_test/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_animation/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_animation/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_animation/build" />
+      <excludeFolder url="file://$MODULE_DIR$/gorouter_test/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/gorouter_test/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/gorouter_test/build" />
+      <excludeFolder url="file://$MODULE_DIR$/imgextract_test/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/imgextract_test/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/imgextract_test/build" />
+      <excludeFolder url="file://$MODULE_DIR$/main_page_features/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/main_page_features/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/main_page_features/build" />
+      <excludeFolder url="file://$MODULE_DIR$/parallax_scroll_demo/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/parallax_scroll_demo/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/parallax_scroll_demo/build" />
+      <excludeFolder url="file://$MODULE_DIR$/photomanager/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/photomanager/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/photomanager/build" />
+      <excludeFolder url="file://$MODULE_DIR$/pos_printer_test/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/pos_printer_test/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/pos_printer_test/build" />
+      <excludeFolder url="file://$MODULE_DIR$/qr_test/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/qr_test/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/qr_test/build" />
+      <excludeFolder url="file://$MODULE_DIR$/retrofit_demo/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/retrofit_demo/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/retrofit_demo/build" />
+      <excludeFolder url="file://$MODULE_DIR$/serialport_test/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/serialport_test/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/serialport_test/build" />
+      <excludeFolder url="file://$MODULE_DIR$/table_canlendar_exmaple/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/table_canlendar_exmaple/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/table_canlendar_exmaple/build" />
+      <excludeFolder url="file://$MODULE_DIR$/test_webview/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/test_webview/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/test_webview/build" />
+      <excludeFolder url="file://$MODULE_DIR$/videoplayer/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/videoplayer/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/videoplayer/build" />
+      <excludeFolder url="file://$MODULE_DIR$/websocket_test/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/websocket_test/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/websocket_test/build" />
+      <excludeFolder url="file://$MODULE_DIR$/webview_windows_win_10/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/webview_windows_win_10/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/webview_windows_win_10/build" />
+      <excludeFolder url="file://$MODULE_DIR$/widget_test/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/widget_test/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/widget_test/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
