@@ -41,7 +41,7 @@ class _PickerScreenState extends State<PickerScreen> {
   void _loadMedias() async {
     _lastPage = _currentPage;
     if (_currentAlbum != null) {
-      List<Media> medias = await fetchMedias(albums: _currentAlbum!, page: _currentPage);
+      List<Media> medias = await fetchMedias(album: _currentAlbum!, page: _currentPage);
 
       setState(() {
         _medias.addAll(medias);
@@ -70,6 +70,7 @@ class _PickerScreenState extends State<PickerScreen> {
 
   void _selectMedia(Media media) {
     bool isSelected = _selectedMedias.any((e) => e.assetEntity.id == media.assetEntity.id);
+    print("_selectMedia:: ${media.assetEntity.title} // $isSelected");
     setState(() {
       if (isSelected) {
         _selectedMedias.removeWhere((e) => e.assetEntity.id == media.assetEntity.id);

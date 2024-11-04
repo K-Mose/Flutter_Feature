@@ -17,6 +17,7 @@ class MediaItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () => selectMedia(media),
       child: Stack(
         children: [
           _buildMediaWidget(),

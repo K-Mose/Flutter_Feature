@@ -6,7 +6,7 @@ import 'package:photomanager/service/grant_permission.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 Future<List<Media>> fetchMedias({
-  required AssetPathEntity albums,
+  required AssetPathEntity album,
   required int page,
 }) async {
   // List to hold the fetched media items
@@ -14,7 +14,7 @@ Future<List<Media>> fetchMedias({
 
   try {
     // Get a list of asset entities from the specified album and page
-    final List<AssetEntity> entities = await albums.getAssetListPaged(page: page, size: 30);
+    final List<AssetEntity> entities = await album.getAssetListPaged(page: page, size: 30);
 
     // Loop through each asset entity and create corresponding Media objects
     for (var entity in entities) {
