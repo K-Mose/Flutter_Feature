@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:heartfield/constants/colors.dart';
-import 'package:heartfield/constants/path.dart';
-import 'package:heartfield/constants/text_style.dart';
-import 'package:heartfield/presentation/common/widgets/widgets.dart';
+import 'package:insta_image_selector/constants/colors.dart';
+import 'package:insta_image_selector/constants/path.dart';
+import 'package:insta_image_selector/state/image_provider.dart';
 
-class CommonDropdownWidget extends StatefulWidget {
+class CommonDropdownWidget extends ConsumerWidget {
   const CommonDropdownWidget({required this.items, this.onTap, this.width = 124, super.key,});
 
   final List<String> items;
@@ -13,21 +13,12 @@ class CommonDropdownWidget extends StatefulWidget {
   final double width;
 
   @override
-  State<CommonDropdownWidget> createState() => _CommonDropdownWidgetState();
-}
-
-class _CommonDropdownWidgetState extends State<CommonDropdownWidget> {
-  String value = '';
-  @override
-  void initState() {
-    super.initState();
-    value = widget.items.first;
-  }
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final images = ref.watch(imageProvider);
+    final items = images.albumList;
     return SizedBox(
       child: DropdownMenu<String>(
-        initialSelection: widget.items.first,
+        initialSelection: images.albumList.firstOrNull?.name,
         trailingIcon: SvgPicture.asset(PATH_ICON_ARROW_DOWN, width: 16, fit: BoxFit.fitWidth,),
         selectedTrailingIcon: SizedBox(height: 16, child: SvgPicture.asset(PATH_ICON_ARROW_UP, width: 16, fit: BoxFit.fitWidth,)),
         inputDecorationTheme: InputDecorationTheme(
@@ -39,7 +30,7 @@ class _CommonDropdownWidgetState extends State<CommonDropdownWidget> {
             borderRadius: BorderRadius.circular(100)
           )
         ),
-        textStyle: hfTextStyle.copyWith(
+        textStyle: const TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w500,
         ),
@@ -51,26 +42,26 @@ class _CommonDropdownWidgetState extends State<CommonDropdownWidget> {
           padding: MaterialStateProperty.all(const EdgeInsets.all(20)),
         ),
         dropdownMenuEntries: [
-          for (final item in widget.items)
+          for (final item in items)
             DropdownMenuEntry(
-              value: item,
-              label: item,
+              value: item.name,
+              label: item.name,
               labelWidget: Container(
                 color: BG_COLOR,
-                child: HFText(item, style: hfTextStyle.copyWith(
-                  fontSize: 12,
-                )),
-              ))
+                child: Text(
+                  item.name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
         ],
         onSelected: (value) {
-          setState(() {
-            if (value != null) {
-              this.value = value;
-              if (widget.onTap != null) {
-                widget.onTap!(value);
-              }
-            }
-          });
+          if (value != null && onTap != null) {
+            onTap!(value);
+          }
         },
       ),
     );
