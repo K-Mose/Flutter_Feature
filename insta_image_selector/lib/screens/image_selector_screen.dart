@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:insta_image_selector/constants/colors.dart';
 import 'package:insta_image_selector/state/image_provider.dart';
+import 'package:screenshot/screenshot.dart';
 
 import 'package:insta_image_selector/widgets/widgets.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -20,6 +21,7 @@ class ImageSelectorScreen extends ConsumerStatefulWidget {
 class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
   final key = GlobalKey();
   final ScrollController controller = ScrollController();
+  final ScreenshotController screenshotController = ScreenshotController();
 
   late PageController pageViewController;
 
@@ -45,7 +47,7 @@ class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
     // TODO: load Medias
     final image = ref.watch(imageProvider);
     final isFulfilled = image.selectedImageList.isNotEmpty;
-    final width = MediaQuery.of(context).size.width - 40;
+    final width = MediaQuery.of(context).size.width - 100;
     print("image.currentImage:: ${image.currentImage}");
     return Scaffold(
         appBar: AppBar(
@@ -74,50 +76,52 @@ class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
               const SizedBox(width: 20,),
             ]
         ),
-        body: SingleChildScrollView(
-          // primary: false,
-          padding: const EdgeInsets.all(20),
-          physics: const ClampingScrollPhysics(),
-          controller: controller,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: width,
-                width: width,
-                color: BG_COLOR,
-                child: (image.selectedImageList.isNotEmpty) ? Focus(
-                  onFocusChange: (value) {
-                    print("onFocusChange:: $value");
-                  },
-                  child: InteractiveViewer(
-                    key: key,
-                    child: FadeInImage(
-                      placeholder: MemoryImage(kTransparentImage),
-                      image: AssetEntityImageProvider(
-                        image.currentImage!,
-                        // thumbnailSize: const ThumbnailSize.square(500),
-                        isOriginal: false,
-                      ),
-                      fit: BoxFit.contain,
+        body: Column(
+          children: [
+            Container(
+              height: width,
+              width: width,
+              color: BG_COLOR,
+              child: (image.selectedImageList.isNotEmpty) ? Screenshot(
+                controller: screenshotController,
+                child: InteractiveViewer(
+                  key: key,
+                  child: FadeInImage(
+                    placeholder: MemoryImage(kTransparentImage),
+                    image: AssetEntityImageProvider(
+                      image.currentImage!,
+                      isOriginal: true,
                     ),
+                    fit: BoxFit.contain,
                   ),
-                ) : Container(),
-              ),
-              const SizedBox(height: 32,),
-              CommonDropdownWidget(
+                ),
+              ) : Container(),
+            ),
+            const SizedBox(height: 12,),
+            Container(
+              width: double.maxFinite,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              alignment: AlignmentDirectional.centerStart,
+              child: CommonDropdownWidget(
                 items: image.albumList.map((album) => album.name).toList(),
                 onTap: (album) async {
                   final selectedAlbum  = image.albumList.firstWhere((a) => a.name == album);
                   ref.read(imageProvider.notifier)
-                      ..selectedAlbum = selectedAlbum
-                      ..loadImages();
+                    ..selectedAlbum = selectedAlbum
+                    ..loadImages();
                 },
               ),
-              const SizedBox(height: 20,),
-              const ImageGridView(),
-            ],
-          ),
+            ),
+            const SizedBox(height: 8,),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                physics: const ClampingScrollPhysics(),
+                controller: controller,
+                child: const ImageGridView(),
+              ),
+            ),
+          ],
         ),
     );
   }
