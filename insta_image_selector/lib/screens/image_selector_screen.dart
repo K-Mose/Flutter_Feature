@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:insta_image_selector/constants/colors.dart';
+import 'package:insta_image_selector/screens/selected_image_screen.dart';
 import 'package:insta_image_selector/state/image_provider.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -52,10 +53,10 @@ class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
             actions: [
               TapGestureDetector(
                 onTap: isFulfilled ? () async {
-                  // final result = await context.push<bool>(FollowingPostWriteScreenPath, extra: {'images': cubit.state.selectedImages});
-                  // if (result != null && result && context.mounted) {
-                  //   context.pop(true);
-                  // }
+                  final datas = await ref.read(imageProvider.notifier).captureImages();
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                    return SelectedImageScreen(datas: datas);
+                  },));
                 } : null,
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
@@ -86,22 +87,6 @@ class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
                     img.widget,
                 ],
               ),
-              /*
-              (image.selectedImageList.isNotEmpty) ? Screenshot(
-                controller: screenshotController,
-                child: InteractiveViewer(
-                  key: key,
-                  child: FadeInImage(
-                    placeholder: MemoryImage(kTransparentImage),
-                    image: AssetEntityImageProvider(
-                      image.currentImage!,
-                      isOriginal: true,
-                    ),
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ) : Container(),
-              */
             ),
             const SizedBox(height: 12,),
             Container(

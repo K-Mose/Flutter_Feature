@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:insta_image_selector/data/image_entity.dart';
@@ -95,6 +97,16 @@ class Image extends Notifier<ImageSelectorEntity> {
 
   bool _contains(AssetEntity image) => state.selectedImageList.map((i) => i.image).contains(image);
   ImageEntity getImage(AssetEntity image) => state.selectedImageList.firstWhere((i) => i.image == image);
+  Future<List<Uint8List>> captureImages() async {
+    final List<Uint8List> data = [];
+    for (final image in state.selectedImageList) {
+      // 이미지 크롭 후 뒤로 가기 했을 때 `Failed assertion: line 3353 pos 12: '!debugNeedsPaint': is not true.`오류 발생
+      state = state.copyWith(currentImage: image);
+      final d = await image.screenshotController.capture();
+      if (d != null) data.add(d);
+    }
+    return data;
+  }
 }
 
 final imageProvider = NotifierProvider<Image, ImageSelectorEntity> (Image.new);
