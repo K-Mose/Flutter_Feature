@@ -19,9 +19,8 @@ class ImageSelectorScreen extends ConsumerStatefulWidget {
 }
 
 class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
-  final key = GlobalKey();
   final ScrollController controller = ScrollController();
-  final ScreenshotController screenshotController = ScreenshotController();
+  // final List<ScreenshotController> ssControllers = [];
 
   late PageController pageViewController;
 
@@ -44,11 +43,9 @@ class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: load Medias
     final image = ref.watch(imageProvider);
     final isFulfilled = image.selectedImageList.isNotEmpty;
     final width = MediaQuery.of(context).size.width - 100;
-    print("image.currentImage:: ${image.currentImage}");
     return Scaffold(
         appBar: AppBar(
             title: const Text("Photo Selector"),
@@ -82,7 +79,15 @@ class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
               height: width,
               width: width,
               color: BG_COLOR,
-              child: (image.selectedImageList.isNotEmpty) ? Screenshot(
+              child: IndexedStack(
+                index: ref.read(imageProvider.notifier).index,
+                children: [
+                  for (final img in image.selectedImageList)
+                    img.widget,
+                ],
+              ),
+              /*
+              (image.selectedImageList.isNotEmpty) ? Screenshot(
                 controller: screenshotController,
                 child: InteractiveViewer(
                   key: key,
@@ -96,6 +101,7 @@ class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
                   ),
                 ),
               ) : Container(),
+              */
             ),
             const SizedBox(height: 12,),
             Container(

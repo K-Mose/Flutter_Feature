@@ -1,11 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:insta_image_selector/data/image_entity.dart';
 import 'package:insta_image_selector/data/image_selector_entity.dart';
+import 'package:insta_image_selector/widgets/current_image_widget.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:screenshot/screenshot.dart';
 
 class Image extends Notifier<ImageSelectorEntity> {
 
-  bool isSelected(AssetEntity image) => state.selectedImageList.contains(image);
+  bool isSelected(AssetEntity image) => state.selectedImageList.map((i) => i.image).contains(image);
+  int? get index => state.selectedImageList.isEmpty
+      ? null : state.selectedImageList.indexOf(state.currentImage!);
 
   @override
   ImageSelectorEntity build() {
@@ -53,24 +58,32 @@ class Image extends Notifier<ImageSelectorEntity> {
     }
   }
 
-  set selectedAlbum(AssetPathEntity albumn) => state = state.copyWith(selectedAlbum: albumn, currentPage: 0, imageList: []);
+  set selectedAlbum(AssetPathEntity album) => state = state.copyWith(selectedAlbum: album, currentPage: 0, imageList: []);
 
-  void selectImage(AssetEntity image) =>
-    (state.selectedImageList.contains(image) && state.currentImage == image)
+  void selectImage(AssetEntity image) {
+    final controller = ScreenshotController();
+    final newImage = ImageEntity(
+        image: image,
+        widget: CurrentImageWidget(
+          image: image,
+          controller: controller,
+        ),
+        screenshotController: controller);
+    (_contains(image) && state.currentImage!.image == image)
         ? _removeImage(image)
-        : (!state.selectedImageList.contains(image))
-        ? state = state.copyWith(
-            selectedImageList: [...state.selectedImageList, image],
-            currentImage: image,
-          )
-        : state = state.copyWith(currentImage: image);
-
+        : (!_contains(image))
+            ? state = state.copyWith(
+                selectedImageList: [...state.selectedImageList, newImage],
+                currentImage: newImage,
+              )
+            : state = state.copyWith(currentImage: getImage(image));
+  }
 
   void _removeImage(AssetEntity image) =>
       {
         state = state.copyWith(
           selectedImageList:
-              state.selectedImageList.where((i) => i != image).toList(),
+              state.selectedImageList.where((i) => i.image != image).toList(),
         ),
         _setCurrentImage()
       };
@@ -80,6 +93,8 @@ class Image extends Notifier<ImageSelectorEntity> {
         currentImage: state.selectedImageList.contains(state.currentImage) ? state.currentImage : state.selectedImageList.last
     );
 
+  bool _contains(AssetEntity image) => state.selectedImageList.map((i) => i.image).contains(image);
+  ImageEntity getImage(AssetEntity image) => state.selectedImageList.firstWhere((i) => i.image == image);
 }
 
 final imageProvider = NotifierProvider<Image, ImageSelectorEntity> (Image.new);

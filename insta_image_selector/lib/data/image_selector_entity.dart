@@ -1,3 +1,4 @@
+import 'package:insta_image_selector/data/image_entity.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class ImageSelectorEntity {
@@ -13,8 +14,8 @@ class ImageSelectorEntity {
   final List<AssetPathEntity> albumList;
   final AssetPathEntity? selectedAlbum;
   final List<AssetEntity> imageList;
-  final List<AssetEntity> selectedImageList;
-  final AssetEntity? currentImage;
+  final List<ImageEntity> selectedImageList;
+  final ImageEntity? currentImage;
   final int currentPage;
 
   factory ImageSelectorEntity.empty() =>
@@ -31,8 +32,8 @@ class ImageSelectorEntity {
     List<AssetPathEntity>? albumList,
     AssetPathEntity? selectedAlbum,
     List<AssetEntity>? imageList,
-    List<AssetEntity>? selectedImageList,
-    AssetEntity? currentImage,
+    List<ImageEntity>? selectedImageList,
+    ImageEntity? currentImage,
     int? currentPage,
   }) {
     return ImageSelectorEntity(
