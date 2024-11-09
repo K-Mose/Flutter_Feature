@@ -31,6 +31,7 @@ class CommonDropdownWidget extends ConsumerWidget {
           )
         ),
         textStyle: const TextStyle(
+          color: Colors.white,
           fontSize: 12,
           fontWeight: FontWeight.w500,
         ),

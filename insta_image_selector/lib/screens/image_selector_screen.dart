@@ -18,14 +18,15 @@ class ImageSelectorScreen extends ConsumerStatefulWidget {
 }
 
 class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
+  final key = GlobalKey();
   final ScrollController controller = ScrollController();
 
   late PageController pageViewController;
 
   void loadMoreMedias() {
     if (controller.position.atEdge && controller.position.pixels != 0) {
-      // TODO: load Medias
-      // context.read<FollowingAlbumCubit>().loadMedias();
+      print("loadMoreImage");
+      ref.read(imageProvider.notifier).loadImages();
     }
   }
 
@@ -35,10 +36,7 @@ class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
     pageViewController = PageController(initialPage: 0);
     ref.read(imageProvider.notifier).getAlum();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      // TODO:
-      // final cubit = context.read<FollowingAlbumCubit>();
       controller.addListener(loadMoreMedias);
-      // cubit.getAlbums();
     });
   }
 
@@ -47,6 +45,8 @@ class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
     // TODO: load Medias
     final image = ref.watch(imageProvider);
     final isFulfilled = image.selectedImageList.isNotEmpty;
+    final width = MediaQuery.of(context).size.width - 40;
+    print("image.currentImage:: ${image.currentImage}");
     return Scaffold(
         appBar: AppBar(
             title: const Text("Photo Selector"),
@@ -75,24 +75,34 @@ class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
             ]
         ),
         body: SingleChildScrollView(
+          // primary: false,
           padding: const EdgeInsets.all(20),
+          physics: const ClampingScrollPhysics(),
           controller: controller,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 200,
-                width: double.maxFinite,
+                height: width,
+                width: width,
                 color: BG_COLOR,
-                child: (isFulfilled) ? FadeInImage(
-                  placeholder: MemoryImage(kTransparentImage),
-                  image: AssetEntityImageProvider(
-                    image.selectedImageList.last,
-                    thumbnailSize: const ThumbnailSize.square(500),
-                    isOriginal: false,
+                child: (image.selectedImageList.isNotEmpty) ? Focus(
+                  onFocusChange: (value) {
+                    print("onFocusChange:: $value");
+                  },
+                  child: InteractiveViewer(
+                    key: key,
+                    child: FadeInImage(
+                      placeholder: MemoryImage(kTransparentImage),
+                      image: AssetEntityImageProvider(
+                        image.currentImage!,
+                        // thumbnailSize: const ThumbnailSize.square(500),
+                        isOriginal: false,
+                      ),
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                  fit: BoxFit.contain,
-                ) : null,
+                ) : Container(),
               ),
               const SizedBox(height: 32,),
               CommonDropdownWidget(
@@ -105,7 +115,7 @@ class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
                 },
               ),
               const SizedBox(height: 20,),
-              ImageGridView(images: image.imageList),
+              const ImageGridView(),
             ],
           ),
         ),
