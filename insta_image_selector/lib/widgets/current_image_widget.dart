@@ -12,21 +12,26 @@ class CurrentImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width - 100;
+    final size = MediaQuery.of(context).size.width - 40;
+    // orientatedSize: 회전된 화면에대한 사이즈, size와 반대로 나올 수 있다.
+    final width = image.orientatedWidth > image.orientatedHeight ? null : size;
+    final height = image.orientatedWidth > image.orientatedHeight ? size : null;
     return Container(
-      height: width,
-      width: width,
-      color: BG_COLOR,
+      height: size,
+      width: size,
+      color: Colors.black,
       child: Screenshot(
         controller: controller,
         child: InteractiveViewer(
-          child: FadeInImage(
-            placeholder: MemoryImage(kTransparentImage),
-            image: AssetEntityImageProvider(
-              image,
-              isOriginal: true,
-            ),
-            fit: BoxFit.contain,
+          maxScale: 3,
+          minScale: 0.1,
+          constrained: false,
+          child: Container(
+            height: height,
+            width: width,
+            padding: EdgeInsets.zero,
+            margin: EdgeInsets.zero,
+            child: Image(image: AssetEntityImageProvider(image),),
           ),
         ),),
     );

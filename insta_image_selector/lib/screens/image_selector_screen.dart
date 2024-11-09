@@ -46,7 +46,7 @@ class _ImageSelectorScreenState extends ConsumerState<ImageSelectorScreen> {
   Widget build(BuildContext context) {
     final image = ref.watch(imageProvider);
     final isFulfilled = image.selectedImageList.isNotEmpty;
-    final width = MediaQuery.of(context).size.width - 100;
+    final width = MediaQuery.of(context).size.width - 40;
     return Scaffold(
         appBar: AppBar(
             title: const Text("Photo Selector"),
