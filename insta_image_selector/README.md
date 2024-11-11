@@ -8,6 +8,14 @@
   ![img](https://raw.githubusercontent.com/Yummypets/YPImagePicker/master/Images/library.PNG)
 </details> 
 
+### Preview
+https://github.com/user-attachments/assets/3c2aa429-4126-4703-bd82-914d7eaed640
+
+
+### Requirment
+1. in⭐️gram처럼 이미지 선택 가능하게
+2. 이미지 편집은 1:1 비율로
+
 ### Libraries
 - photo_manager
 - screenshot
