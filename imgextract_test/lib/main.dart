@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imgextract_test/screens/extract_text_screen.dart';
 import 'package:imgextract_test/screens/resizable_rect_screen.dart';
 import 'package:imgextract_test/screens/screenshot_screen.dart';
 
@@ -44,6 +45,13 @@ class HomeScreen extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ScreenshotScreen(),));
               },
               child: const Text("Screenshot"),
+            ),
+            const SizedBox(height: 120,),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ExtractTextScreen(),));
+              },
+              child: const Text("ExtractText"),
             ),
           ],
         ),
