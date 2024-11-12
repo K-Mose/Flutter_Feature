@@ -14,8 +14,15 @@ class CurrentImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size.width - 40;
     // orientatedSize: 회전된 화면에대한 사이즈, size와 반대로 나올 수 있다.
-    final width = image.orientatedWidth > image.orientatedHeight ? null : size;
-    final height = image.orientatedWidth > image.orientatedHeight ? size : null;
+    // final width = image.orientatedWidth > image.orientatedHeight
+    //     ? null
+    //     : image.orientatedWidth > size ? size : image.orientatedWidth * 1.0;
+    // final height = image.orientatedWidth > image.orientatedHeight
+    //     ? image.orientatedHeight > size ? size : image.orientatedHeight * 1.0
+    //     : null;
+    final ratio = image.orientatedWidth < image.orientatedHeight ? image.orientatedHeight / image.orientatedWidth : image.orientatedWidth / image.orientatedHeight;
+    final width = image.orientatedWidth > image.orientatedHeight ? size * ratio : size * 1.0;
+    final height = image.orientatedWidth > image.orientatedHeight ? size * 1.0: size * ratio;
     return Container(
       height: size,
       width: size,
@@ -23,7 +30,7 @@ class CurrentImageWidget extends StatelessWidget {
       child: Screenshot(
         controller: controller,
         child: InteractiveViewer(
-          maxScale: 3,
+          maxScale: 6,
           minScale: 0.1,
           constrained: false,
           child: Container(
@@ -31,7 +38,7 @@ class CurrentImageWidget extends StatelessWidget {
             width: width,
             padding: EdgeInsets.zero,
             margin: EdgeInsets.zero,
-            child: Image(image: AssetEntityImageProvider(image),),
+            child: Image(image: AssetEntityImageProvider(image), height: size, fit: BoxFit.fill,),
           ),
         ),),
     );
