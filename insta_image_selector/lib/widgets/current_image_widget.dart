@@ -12,6 +12,8 @@ class CurrentImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // indexed stack에서 리스트 삭제 시 오류 발생, ValueKey 주기
+    final key = ValueKey(image.id);
     final size = MediaQuery.of(context).size.width - 40;
     // orientatedSize: 회전된 화면에대한 사이즈, size와 반대로 나올 수 있다.
     // final width = image.orientatedWidth > image.orientatedHeight
@@ -24,6 +26,7 @@ class CurrentImageWidget extends StatelessWidget {
     final width = image.orientatedWidth > image.orientatedHeight ? size * ratio : size * 1.0;
     final height = image.orientatedWidth > image.orientatedHeight ? size * 1.0: size * ratio;
     return Container(
+      key: key,
       height: size,
       width: size,
       color: Colors.black,
