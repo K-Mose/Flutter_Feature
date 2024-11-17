@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:imgextract_test/screens/extract_text_screen.dart';
 import 'package:imgextract_test/screens/resizable_rect_screen.dart';
 import 'package:imgextract_test/screens/screenshot_screen.dart';
+import 'package:imgextract_test/screens/web_view_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,26 +33,33 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            const SizedBox(height: 120,),
+            const SizedBox(height: 80,),
             TextButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ResizableRectScreen(),));
               },
               child: const Text("Resizable Rectangle"),
             ),
-            const SizedBox(height: 120,),
+            const SizedBox(height: 80,),
             TextButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ScreenshotScreen(),));
               },
               child: const Text("Screenshot"),
             ),
-            const SizedBox(height: 120,),
+            const SizedBox(height: 80,),
             TextButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ExtractTextScreen(),));
               },
               child: const Text("ExtractText"),
+            ),
+            const SizedBox(height: 80,),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const WebViewScreen(),));
+              },
+              child: const Text("WebViewScreen"),
             ),
           ],
         ),
