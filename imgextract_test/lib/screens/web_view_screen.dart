@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imgextract_test/widgets/image_cropper_widget.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -33,7 +34,6 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Screenshot(
         controller: controller,
         child: WebViewWidget(
@@ -44,13 +44,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
         onPressed: () async {
           final data = await controller.capture();
           if (data == null || !context.mounted) return;
-          showDialog(context: context, builder: (context) => Container(
-            decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border.all(color: Colors.black)
-            ),
-            child: Image.memory(data),
-          ),);
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ImageCropperWidget(data),));
         },
         child: const Icon(Icons.crop),
       ),
