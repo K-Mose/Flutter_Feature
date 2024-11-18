@@ -1,7 +1,10 @@
+import 'dart:io';
 import 'dart:typed_data';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image/image.dart' as img;
 
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ImageCropperWidget extends StatefulWidget {
   final Uint8List image;
@@ -50,6 +53,19 @@ class _ImageCropperWidgetState extends State<ImageCropperWidget> {
       height = newHeight > 0 ? newHeight : 0;
       width = newWidth > 0 ? newWidth : 0;
     });
+  }
+
+  Future<String> extractText(File image) async {
+    try {
+      // script에 번역할 언어 설정.
+      TextRecognizer textRecognizer = TextRecognizer(script: TextRecognitionScript.korean);
+      // textRecognizer에서 추출을 실행
+      final process = await textRecognizer.processImage(InputImage.fromFile(image));
+      return process.text;
+    } catch (e) {
+      print(e);
+    }
+    return "error";
   }
 
   @override
@@ -198,39 +214,51 @@ class _ImageCropperWidgetState extends State<ImageCropperWidget> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           final _width = MediaQuery.of(context).size.width;
           final _height = MediaQuery.of(context).size.height;
-          print("initX//initY:: $initX // $initY}");
-          print("top // left:: $top // $left}");
-          print("top // left:: ${top.toInt()} // ${left.toInt()}}");
-          print("height // width:: $height // $width}");
-          print("height // width:: ${height.toInt()} // ${width.toInt()}}");
           final src = img.decodePng(widget.image,);
           if (src == null) return;
-          print("size:: width // height:: ${src.width} // ${src.height}}");
           final wRatio = src.width / _width;
           final hRatio = src.height / _height;
-          print("ratio:: $wRatio // $hRatio}");
-          print((left + 2) * hRatio);
-          print((top + 5) * wRatio);
-          print(width * wRatio);
-          print(height * hRatio);
           final i = img.copyCrop(src,
               x: ((left) * wRatio).toInt(),
               y: ((top) * wRatio).toInt(),
               width: (width * wRatio).toInt(),
               height: ((height) * wRatio).toInt());
           final _image = Image.memory(img.encodePng(i, singleFrame: true));
-          print("image");
-          print(i.width);
-          print(i.height);
+          final temp = await getApplicationDocumentsDirectory();
+          final _file = File("${temp.path}/temp.png");
+          await _file.writeAsBytes(img.encodePng(i, singleFrame: true));
+          final text =  await extractText(_file);
           showDialog(context: context, builder: (context) => Container(
-            decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border.all(color: Colors.black)
+            height: _height,
+            child: Column(
+              children: [
+                Container(
+                  height: _height / 2,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      border: Border.all(color: Colors.black)
+                  ),
+                  child: _image,
+                ),
+                Container(
+                  width: _width,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      border: Border.all(color: Colors.black)
+                  ),
+                  child: DefaultTextStyle(
+                    style: const TextStyle(fontSize: 14, color: Colors.white),
+                    child: SelectableText(text),
+                  ),
+                ),
+                Expanded(child: Container()),
+              ],
             ),
-            child: _image,
           ),);
         },
         child: const Icon(Icons.abc),
