@@ -56,5 +56,25 @@ distributionUrl = https\://services.gradle.org/distributions/gradle-8.7-bin.zip
 ```
 3.  JDK 22버전 이상 다운로드 후 SDK 설정을 한다.
 ![image](https://github.com/user-attachments/assets/46c7212b-393c-40e6-9496-55f996ae63f0)
-4. `flutter run` 또는 shift + F10 으로 앱을 실행한다. 
+4. `flutter run` 또는 shift + F10 으로 앱을 실행한다.
 
+
+### Dart 3.0 mirgration 오류
+`A problem occurred configuring project ':package_name'.`
+해당 패키지가 2.x 버전으로 최신 gradle 버전과 호환이 안돼 나오는 오류로 보인다. <br>
+패키지를 dart 3.x와 호환되는 버전으로 업그레이드 하거나 해당 패키지의 `build.gradle` 파일에서 `namespace`를 직접 지정해준다. <br>
+
+**오류 내용**
+```
+A problem occurred configuring project ':package_name'.
+> Could not create an instance of type com.android.build.api.variant.impl.LibraryVariantBuilderImpl.
+   > Namespace not specified. Specify a namespace in the module's build file: C:\Users\%your_name%\AppData\Local\Pub\Cache\hosted\pub.dev\package_name-version\android\build.gradle.
+```
+위에 나오 `build.gradle`파일을 열고 `namespace`를 지정해준다. 
+```
+android {
+    if (project.android.hasProperty("namespace")) {
+      namespace = "com.example.packagename" // 파일 맨 위에 group에 나온 package name을 복붙
+    }
+}
+```
