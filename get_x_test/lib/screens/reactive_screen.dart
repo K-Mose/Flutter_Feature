@@ -14,6 +14,12 @@ class _ReactiveScreenState extends State<ReactiveScreen> {
   final tc = TextEditingController();
 
   @override
+  void initState() {
+    Get.put(MyObsController());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),

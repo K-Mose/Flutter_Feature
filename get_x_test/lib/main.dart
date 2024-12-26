@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_x_test/controller/obs_controller.dart';
 import 'package:get_x_test/screens/reactive_screen.dart';
+import 'package:get_x_test/screens/simple_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,7 +37,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    Get.put(MyObsController());
     super.initState();
   }
 
@@ -51,6 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            OutlinedButton(onPressed: () => Get.to(const SimpleScreen()), child: const Text("Simple")),
+            const SizedBox(height: 20,),
             OutlinedButton(onPressed: () => Get.to(const ReactiveScreen()), child: const Text("Reactive")),
           ],
         ),
