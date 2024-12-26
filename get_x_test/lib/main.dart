@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_x_test/controller/obs_controller.dart';
+import 'package:get_x_test/screens/reactive_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -30,12 +33,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    Get.put(MyObsController());
+    super.initState();
   }
 
   @override
@@ -49,21 +51,37 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            OutlinedButton(onPressed: () => Get.to(const ReactiveScreen()), child: const Text("Reactive")),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
 }
+
+class MyText extends StatelessWidget {
+  final String value;
+  const MyText(this.value, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("MyText is Build!! :: $value");
+    return Text(value);
+  }
+}
+
+class MyInputButton extends StatelessWidget {
+  final TextEditingController tc;
+  const MyInputButton(this.tc, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("MyInputButton is Build!!");
+    return OutlinedButton(
+      onPressed: () =>
+          Get.find<MyObsController>().updateValue(tc.text),
+      child: const MyText("입력"),
+    );
+  }
+}
+
