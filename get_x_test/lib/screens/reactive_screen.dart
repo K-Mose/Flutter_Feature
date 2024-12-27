@@ -21,16 +21,37 @@ class _ReactiveScreenState extends State<ReactiveScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<MyObsController>();
     return Scaffold(
       appBar: AppBar(),
       body: Center(
         child: Column(
           children: [
-            Obx(() {
-              final controller = Get.find<MyObsController>();
-              return MyText(controller.myValue.value);
-            },),
-            const SizedBox(height: 80,),
+            const SizedBox(width: 100,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Obx(() {
+                  return MyText(controller.myCounter.toString());
+                },),
+                const SizedBox(width: 100,),
+                MyText(controller.myCounter.toString()),
+                const SizedBox(width: 100,),
+                Obx(() {
+                  // final controller = Get.find<MyObsController>();
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // 하나의 Obx에서 여러 개의 값이
+                      // MyText(controller.myCounter.toString()),
+                      const SizedBox(width: 100,),
+                      MyText(controller.myValue.value),
+                    ],
+                  );
+                },),
+              ],
+            ),
+            const SizedBox(height: 30,),
             SizedBox(
               height: 100,
               width: 300,
@@ -50,6 +71,10 @@ class _ReactiveScreenState extends State<ReactiveScreen> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: Get.find<MyObsController>().increase,
+        child: const Icon(Icons.add),
       ),
     );
   }
