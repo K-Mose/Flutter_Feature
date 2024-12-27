@@ -8,4 +8,5 @@ class MyObsController extends GetxController {
 
   void updateValue(String value) => myValue.value = value; // 값 항당 시 UI 업데이트
   void increase() => myCounter++;
+  void increaseUpdate() => {myCounter++, update()};
 }

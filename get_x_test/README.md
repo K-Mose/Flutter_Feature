@@ -23,6 +23,18 @@ class MyStateController extends GetXController {
 }
 ```
 
+```dart
+GetBuilder(
+  init: MyStateController(),
+  builder: (controller) {
+    return MyText(controller.myValue);   
+  }
+)
+```
+`GetBuilder`는 init에 등록된 컨트롤러를 관찰하고, 컨트롤러에서 `update`가 호출되면 포함하는 위젯 전체를 rebuild 한다.
+
+
+
 ### Reactive State Management
 Rx<T> 타입을 사용하여 값을 관찰한다. 타입별 extension이 있어서 값에 obs를 붙여서 rx 객체를 생성한다. 
 
