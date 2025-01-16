@@ -100,3 +100,67 @@ Obx(() {
 2번 코드는 하나의 `Obx`가 두 값을 관찰하고있기 때문에 어느 한 값이 변하면 `Obx` 내부의 전체 위젯이 업데이트 된다.
 
 UI의 업데이트를 최소화 하려면 변하는 위젯에만 `Obx`를 사용하면 된다. 
+
+## GetX Routing 
+- 라우팅 히스토리 : https://stackoverflow.com/questions/78315456/flutter-getx-how-to-obtain-routes-in-stack-aka-routing-history
+
+GetX에서 페이지 라우팅은 `GetMaterialApp`의 `getPages`에 `List<GetPage>` 타입의 라우팅 테이블을 작성하면 된다. 
+※ `getPage`에 라우팅 테이블을 작성하지 않아도 `Get.to`은 사용 가능하나 `Get.toNamed`는 사용 불가능하다. (`Could not find a generator for route RouteSettings("/path", null) in the _WidgetsAppState.`)
+
+<details>
+<summary>codes</summary>
+
+```dart 
+// main
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      navigatorObservers: [MyNavigatorObserver()],
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      getPages: Routes.routes,
+    );
+  }
+}
+```
+
+```dart 
+// Routes
+class Routes {
+  static final routes = [
+    GetPage(
+        name: PageA.routeName,
+        page: () => const PageA(),
+        children: [
+          GetPage(
+              name: PageAA.routeName, // gorouter와 달리 하위 페이지의 routeName도 '/'로 시작해야 한다.
+              page: () => const PageAA(),  
+              children: [
+                GetPage(
+                  name: PageAAA.routeName,
+                  page: () => const PageAAA(),
+                ),
+              ]
+          ),
+        ]
+    ),
+    GetPage(
+      name: PageB.routeName,
+      page: () => const PageB(),
+    ),
+    GetPage(
+      name: PageC.routeName,
+      page: () => const PageC(),
+    ),
+  ];
+}
+```
+
+</details>
