@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_x_test/constants/path.dart';
 
 class PageAA extends StatelessWidget {
-  static const routeName = '$pageARoute/aa';
+  static const routeName = '/aa';
   const PageAA({super.key});
 
   @override

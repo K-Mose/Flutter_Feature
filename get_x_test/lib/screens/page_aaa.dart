@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_x_test/constants/path.dart';
 
 class PageAAA extends StatelessWidget {
-  static const routeName = '$pageAARoute/aaa';
+  static const routeName = '/aaa';
   const PageAAA({super.key});
 
   @override
@@ -20,7 +20,10 @@ class PageAAA extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 OutlinedButton(
-                  onPressed: () => Get.until(pageARoute),
+                  // / -> /a -> /aa -> /aaa 상태에서 /->/aa로 변경
+                  onPressed: () => Get.offNamedUntil(pageARoute, (route) {
+                    return route.settings.name == '/';
+                  },),
                   child: const Text('Page A'),
                 ),
                 OutlinedButton(
