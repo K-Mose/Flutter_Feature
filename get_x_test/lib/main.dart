@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_x_test/constants/path.dart';
 import 'package:get_x_test/controller/obs_controller.dart';
+import 'package:get_x_test/navigator_observer.dart';
+import 'package:get_x_test/routes.dart';
 import 'package:get_x_test/screens/reactive_screen.dart';
 import 'package:get_x_test/screens/simple_screen.dart';
 
@@ -20,6 +23,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      getPages: Routes.routes,
     );
   }
 }
@@ -54,6 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
             OutlinedButton(onPressed: () => Get.to(const SimpleScreen()), child: const Text("Simple")),
             const SizedBox(height: 20,),
             OutlinedButton(onPressed: () => Get.to(const ReactiveScreen()), child: const Text("Reactive")),
+            const SizedBox(height: 20,),
+            OutlinedButton(onPressed: () => Get.toNamed(pageARoute), child: const Text("Page A")),
           ],
         ),
       ),
